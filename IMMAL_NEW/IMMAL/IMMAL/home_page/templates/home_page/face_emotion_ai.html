@@ -1,0 +1,278 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/facemesh"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: black;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        nav {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            width: 80px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: black;
+            cursor: grab;
+        }
+        nav .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-45deg);
+        }
+        .nav-content .toggle-btn,
+        .nav-content span a {
+            height: 60px;
+            width: 60px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .nav-content .toggle-btn {
+            background: black;
+            display: flex;
+            align-items: normal;
+            font-size: 30px;
+            color: #0e2431;
+            z-index: 100;
+            cursor: pointer;
+            transform: rotate(-225deg);
+            transition: all 0.6s ease;
+        }
+        nav.open .toggle-btn {
+            transform: rotate(0deg);
+        }
+        .nav-content span {
+            position: absolute;
+            transition: all 0.6s ease;
+            transform: rotate(calc(var(--i) * (360deg/8))) translateY(120px);
+            opacity: 1;
+        }
+        .nav-content span a {
+            text-decoration: none;
+            transform: rotate(45deg);
+        }
+        .nav-content span a i {
+            font-size: 24px;
+            color: #0e2431;
+            transform: rotate(calc(var(--i) * (360deg/ -8)));
+            opacity: 0.8;
+            transition: 0.2s;
+        }
+        .nav-content span a:hover i {
+            opacity: 1;
+        }
+       
+        
+        .register-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #333;
+            text-decoration: none;
+        }
+        
+        .register-link:hover {
+            text-decoration: underline;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+    
+        .icons
+        {
+            height: 30px;
+            width: 30px;
+        }
+        nav .icons{
+            font-size: 24px;
+            color: #0e2431;
+            transform: rotate(calc(var(--i) * (360deg/ -8)));
+            opacity: 0.8;
+            transition: 0.2s;
+    
+    
+           
+        }
+        html, body {
+            font-family: Microsoft JhengHei UI;
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-image: url('Immalbackground.jpg'); /* Replace 'home_bg.jpg' with the actual path to your image */
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 30px; /* Larger font size for h1 */
+            margin-top: 20px;
+        }
+
+        #video {
+            margin-left: 10%;
+            /* Adjust the left margin of the first video */
+        }
+
+        #emotionResults {
+            text-align: center;
+            font-weight: bold;
+            font-size: 2em; /* Larger font size for emotionResults */
+            margin-top: 20px;
+        }
+
+        #emotionResults div {
+            font-size: 2.5em; /* Larger font size for the emotion text */
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+<!-- HTML content -->
+
+<h1>Face Emotion Recognition AI</h1>
+<video id="video" width="600px" height="400px" autoplay></video>
+<canvas id="canvas" width="600px" height="500px"></canvas>
+<div id="emotionResults"></div>
+
+<script>
+    async function setupCamera() {
+        const video = document.getElementById('video');
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+            video.play();
+        };
+    }
+
+    async function addGreenLines() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const faceMesh = await facemesh.load();
+        const predictions = await faceMesh.estimateFaces(video);
+
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = 1; // Adjusted line width
+        ctx.strokeStyle = 'green';
+
+        if (predictions.length > 0) {
+            predictions.forEach(prediction => {
+                const keypoints = prediction.scaledMesh;
+                for (let i = 0; i < keypoints.length - 1; i++) {
+                    const [x1, y1] = keypoints[i];
+                    const [x2, y2] = keypoints[i + 1];
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                }
+            });
+        }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
+    function displayRandomEmotion() {
+        const emotionResults = document.getElementById('emotionResults');
+        const emotions = ['Happy', 'Sad', 'Neutral'];
+        const randomEmotion = emotions[Math.floor(Math.random() * emotions.length)];
+        const emotionElement = document.createElement('div');
+        emotionElement.textContent = `Your emotion: ${randomEmotion}`;
+        emotionResults.innerHTML = '';
+        emotionResults.appendChild(emotionElement);
+    }
+
+    setupCamera();
+    setInterval(addGreenLines, 100);
+
+ 
+    setInterval(displayRandomEmotion, 5000);
+</script>
+
+
+<nav class="open">
+    <div class="nav-content">
+        <div class="toggle-btn">
+            <img src="{% static 'hands_together_immal.gif' %}" alt="Logo" style="max-width: 100%; border-radius: 50%;">
+        </div>
+        <span style="--i:1;">
+            <a href="{% url 'home' %}"><ion-icon class = "icons" name="home-outline"></ion-icon></a>
+        </span>
+        <span style="--i:2;">
+            <a href="{% url 'community' %}"><ion-icon class = "icons" name="chatbubbles-outline"></ion-icon></a>
+        </span>
+        <span style="--i:3;">
+            <a href="{% url 'aboutus' %}"><ion-icon class = "icons" name="information-outline"></ion-icon></a>
+        </span>
+        <span style="--i:4;">
+            <a href="{% url 'face_ai' %}"><ion-icon class = "icons" name="videocam-outline"></ion-icon></a>
+        </span>
+        <span style="--i:5;">
+            <a href="{% url 'entertainment' %}"><ion-icon class="icons" name="game-controller-outline"></ion-icon></a>
+         </span>
+    </div>
+    </nav>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script>
+    // Optional: JS code to make draggable
+    const nav = document.querySelector("nav");
+
+    function onDrag({ movementY }) {
+        const navStyle = window.getComputedStyle(nav),
+            navTop = parseInt(navStyle.top),
+            navHeight = parseInt(navStyle.height),
+            windowHeight = window.innerHeight;
+
+        nav.style.top = navTop + movementY > 0 ? ${navTop + movementY}px : "1px";
+        if (navTop + movementY > windowHeight - navHeight) {
+            nav.style.top = ${windowHeight - navHeight}px;
+        }
+    }
+
+    nav.addEventListener("mousedown", () => {
+        window.addEventListener("mousemove", onDrag);
+    });
+
+    window.addEventListener("mouseup", () => {
+        window.removeEventListener("mousemove", onDrag);
+    });
+    </script>
+</body>
+</html>

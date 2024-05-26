@@ -1,0 +1,260 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="C:\Users\Denajder Bardhi\Desktop\IMMAL_NEW\IMMAL\IMMAL\users\static\immal_video_prova2.gif" type="icon">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
+    <title>Log In ~~ Sign Up</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: black;
+        margin: 0;
+        overflow: hidden;
+    }
+    
+    nav {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        width: 80px;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+        cursor: grab;
+    }
+    nav .nav-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-45deg);
+    }
+    .nav-content .toggle-btn,
+    .nav-content span a {
+        height: 60px;
+        width: 60px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+    .nav-content .toggle-btn {
+        background: black;
+        display: flex;
+        align-items: normal;
+        font-size: 30px;
+        color: #0e2431;
+        z-index: 100;
+        cursor: pointer;
+        transform: rotate(-225deg);
+        transition: all 0.6s ease;
+    }
+    nav.open .toggle-btn {
+        transform: rotate(0deg);
+    }
+    .nav-content span {
+        position: absolute;
+        transition: all 0.6s ease;
+        transform: rotate(calc(var(--i) * (360deg/8))) translateY(120px);
+        opacity: 1;
+    }
+    .nav-content span a {
+        text-decoration: none;
+        transform: rotate(45deg);
+    }
+    .nav-content span a i {
+        font-size: 24px;
+        color: #0e2431;
+        transform: rotate(calc(var(--i) * (360deg/ -8)));
+        opacity: 0.8;
+        transition: 0.2s;
+    }
+    .nav-content span a:hover i {
+        opacity: 1;
+    }
+    .form-container {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 400px;
+        max-width: 90%;
+    }
+    
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    
+    .form-container input, .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #5e42a6;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .form-container button:hover {
+        background: #b74e91;
+    }
+    
+    .register-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #333;
+        text-decoration: none;
+    }
+    
+    .register-link:hover {
+        text-decoration: underline;
+    }
+    
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    .icons
+    {
+        height: 30px;
+        width: 30px;
+    }
+    nav .icons{
+        font-size: 24px;
+        color: #0e2431;
+        transform: rotate(calc(var(--i) * (360deg/ -8)));
+        opacity: 0.8;
+        transition: 0.2s;
+
+
+       
+    }
+</style>
+</head>
+<body>
+
+<main class="main">
+<div class="form-container">
+<h2>SIGN UP</h2>
+<form method="POST">
+    {% csrf_token %}
+    
+    <input type="text" name="username" placeholder="Username">
+    <input type="text" name="first_name" placeholder="First name">
+    <input type="text" name="last_name" placeholder="Last name">
+    <input type="email" name="email" placeholder="Email">
+    <input type="password" name="password1" placeholder="Password">
+    <input type="password" name="password2" placeholder="Confirm Password">
+    <input type="submit" value="Sign UP">
+
+    <div>
+        Already have an account? <a href="{% url 'login' %}">Login today</a>
+    </div>
+
+</form>
+</div>
+</main>
+
+{% if form.errors %}
+<div class="alert alert-danger" style="color: white;">
+    {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+            <strong>{{ field }}</strong>: {{ error }}
+        {% endfor %}
+    {% endfor %}
+</div>
+{% endif %}
+
+<nav class="open">
+    <div class="nav-content">
+        <div class="toggle-btn">
+            <img src="{% static 'hands_together_immal.gif' %}" alt="Logo" style="max-width: 100%; border-radius: 50%;">
+        </div>
+        <span style="--i:1;">
+            <a href="{% url 'home' %}"><ion-icon class = "icons" name="home-outline"></ion-icon></a>
+        </span>
+        <span style="--i:2;">
+            <a href="{% url 'community' %}"><ion-icon class = "icons" name="chatbubbles-outline"></ion-icon></a>
+        </span>
+        <span style="--i:3;">
+            <a href="{% url 'aboutus' %}"><ion-icon class = "icons" name="information-outline"></ion-icon></a>
+        </span>
+        <span style="--i:4;">
+            <a href="{% url 'face_ai' %}"><ion-icon class = "icons" name="videocam-outline"></ion-icon></a>
+        </span>
+        <span style="--i:5;">
+            <a href="{% url 'entertainment' %}"><ion-icon class="icons" name="game-controller-outline"></ion-icon></a>
+         </span>
+    </div>
+    </nav>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script>
+    // Optional: JS code to make draggable
+    const nav = document.querySelector("nav");
+
+    function onDrag({ movementY }) {
+        const navStyle = window.getComputedStyle(nav),
+            navTop = parseInt(navStyle.top),
+            navHeight = parseInt(navStyle.height),
+            windowHeight = window.innerHeight;
+
+        nav.style.top = navTop + movementY > 0 ? ${navTop + movementY}px : "1px";
+        if (navTop + movementY > windowHeight - navHeight) {
+            nav.style.top = ${windowHeight - navHeight}px;
+        }
+    }
+
+    nav.addEventListener("mousedown", () => {
+        window.addEventListener("mousemove", onDrag);
+    });
+
+    window.addEventListener("mouseup", () => {
+        window.removeEventListener("mousemove", onDrag);
+    });
+    </script>
+</body>
+</html>
+
+

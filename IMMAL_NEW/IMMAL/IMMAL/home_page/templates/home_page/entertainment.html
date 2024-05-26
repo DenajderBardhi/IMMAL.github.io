@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Minds</title>
+<style>
+    html, body {
+        font-family: Microsoft JhengHei UI;
+        font-size: 15px;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-image: url('Immalbackground.jpg'); /* Replace 'home_bg.jpg' with the actual path to your image */
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+    }
+    
+    .container {
+        display: flex;
+        justify-content: center; /* Center the content horizontally */
+        align-items: center; /* Center the content vertically */
+        height: 100vh; /* Make the container full height of the viewport */
+    }
+
+   
+    .main {
+        margin-left: 25%; /* Adjust the left margin to accommodate the sidebar */
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .button:hover {
+        background-color: #0056b3;
+    }
+
+    .quote-container {
+        text-align: center;
+        margin-top: 50px;
+        color: white; /* Set text color to white */
+        width: 60%; /* Set width to 60% */
+        margin-left: auto; /* Center the container */
+        margin-right: auto; /* Center the container */
+    }
+
+    .quote {
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+   
+
+    <main class="main">
+        <div class="container">
+            <h1>Healing Minds</h1>
+
+            <div class="button-container">
+                <a class="button" href="https://playtictactoe.org/" target="_blank">Play Tic-Tac-Toe</a>
+                <a class="button" href="https://www.chess.com/" target="_blank">Play Memory Game</a>
+                <a class="button" href="https://www.youtube.com/watch?v=IV072FJtZzU" target="_blank">Watch Nature Relaxation</a>
+                <a class="button" href="https://www.youtube.com/watch?v=x9Vl8vWyZNE" target="_blank">Watch Guided Meditation</a>
+                <button class="button" onclick="showQuote()">Show Quote</button>
+            </div>
+            
+
+            <div class="quote-container" style="display: none;" id="quoteContainer">
+                <p class="quote" id="quoteText"></p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    function showQuote() {
+        // Quotes array
+        const quotes = [
+            "The only way to do great work is to love what you do. - Steve Jobs",
+            "Believe you can and you're halfway there. - Theodore Roosevelt",
+            "In the middle of difficulty lies opportunity. - Albert Einstein",
+            "You are never too old to set another goal or to dream a new dream. - C.S. Lewis",
+            "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt"
+        ];
+
+        // Get random quote
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        const quote = quotes[randomIndex];
+
+        // Display quote
+        const quoteContainer = document.getElementById("quoteContainer");
+        const quoteText = document.getElementById("quoteText");
+        quoteText.textContent = quote;
+        quoteContainer.style.display = "block";
+    }
+</script>
+</body>
+</html>

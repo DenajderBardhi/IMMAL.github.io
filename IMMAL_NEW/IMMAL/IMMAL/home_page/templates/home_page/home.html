@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IMMAL Welcome Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: black;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+        }
+
+        .titles {
+            position: absolute;
+            top: 10%;
+            text-align: center;
+        }
+
+        .titles h1 {
+            margin: 0;
+            font-size: 80px;
+            font-weight: 700;
+        }
+
+        .titles h2 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 200;
+            text-transform: lowercase;
+        }
+
+        .menu {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu li {
+            position: absolute;
+            left: 0;
+            list-style: none;  
+            transform-origin: 200px;
+            transition: 0.5s;
+            transition-delay: calc(0.1s * var(--i));
+            transform: rotate(calc(360deg / 6 * var(--i)));
+        }
+
+        .menu li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+            transform: rotate(calc(360deg / -6 * var(--i)));
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.15);
+            color: #111;
+            transition: 0.5s;
+        }
+
+        .menu li a:hover {
+            color: purple;
+        }
+
+        .menu.active .toggle {
+            transform: rotate(315deg);
+        }
+
+        .icons {
+            height: 65px;
+            width: 65px;
+        }
+
+        button {
+            margin: 12px;
+            height: 50px;
+            width: 150px;
+            border-radius: 10px;
+            background: #333;
+            justify-content: center;
+            align-items: center;
+            box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #444,
+              inset -5px -5px 10px #222;
+            font-family: "Damion", cursive;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            color: white;
+            transition: 500ms;
+        }
+
+        button:hover {
+            box-shadow: -5px -5px 15px #444, 5px 5px 15px #222, inset 5px 5px 10px #222,
+              inset -5px -5px 10px #444;
+            color: #d6d6d6;
+            transition: 500ms;
+        }
+    </style>
+</head>
+<body>
+    <div class="titles">
+        <h1>WELCOME TO IMMAL</h1>
+        <h2>Connecting hearts, healing minds</h2>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    <div class="menu active"> <!-- Add 'active' class here -->
+        <div class="toggle">
+            <img src="{% static 'hands_together_immal.gif' %}" alt="Logo" style="max-width: 100%; border-radius: 50%;">
+        </div>
+
+        <li style="--i:1;">
+            <a href="{% url 'home' %}"><ion-icon class="icons" name="person-outline"></ion-icon></a>
+        </li>
+
+        <li style="--i:2;">
+            <a href="{% url 'community' %}"><ion-icon class = "icons" name="chatbubbles-outline"></ion-icon></a>
+        </li>
+
+        <li style="--i:3;">
+            <a href="{% url 'aboutus' %}"><ion-icon class = "icons" name="information-outline"></ion-icon></a>
+        </li>
+
+        <li style="--i:4;">
+            <a href="{% url 'face_ai' %}"><ion-icon class = "icons" name="videocam-outline"></ion-icon></a>
+        </li>
+
+        <li style="--i:5;">
+            <a href="{% url 'entertainment' %}"><ion-icon class="icons" name="game-controller-outline"></ion-icon></a>
+        </li>
+
+        <li style="--i:6;">
+            <a href="#"><ion-icon class="icons" name="chatbubble-ellipses-outline"></ion-icon></a>
+        </li>
+    </div>
+    <br><br><br>
+    <button> <a href="{% url 'login' %}" style="color:white">Login</a> </button>
+    <button>  <a href="{% url 'register' %}" style="color:white">Sign Up</a></button>
+    <br><br><br>
+    <h2>POWERED BY DARE</h2>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

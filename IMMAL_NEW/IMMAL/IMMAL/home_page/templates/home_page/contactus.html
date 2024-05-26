@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Combined HTML and CSS</title>
+<style>
+    html, body {
+        font-family: Microsoft JhengHei UI;
+        font-size: 15px;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-image: url('Immalbackground.jpg'); /* Replace 'home_bg.jpg' with the actual path to your image */
+        background-size: cover;
+        background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+    }
+
+    .sidebar {
+        position: fixed;
+        width: 25%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent background color to enhance readability */
+        font-size: 0.75em;
+        left: 0; /* Ensure the sidebar sticks to the left */
+        top: 0; /* Align the sidebar to the top */
+    }
+
+    .nav {
+        position: relative;
+        margin: 0 15%;
+        text-align: right;
+        top: 50%;
+        transform: translateY(-50%);
+        font-weight: bold;
+    }
+
+    .nav ul {
+        list-style: none;
+    }
+
+    .nav ul li {
+        position: relative;
+        margin: 3.2em 0;
+    }
+
+    .nav ul li a {
+        line-height: 5em;
+        text-transform: uppercase;
+        text-decoration: none;
+        letter-spacing: 0.4em;
+        color: rgba(255, 255, 255, 0.35);
+        display: block;
+        transition: all ease-out 300ms;
+    }
+
+    .nav ul li.active a {
+        color: white;
+    }
+
+    .nav ul li:not(.active)::after {
+        opacity: 0.2;
+    }
+
+    .nav ul li:not(.active):hover a {
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    .nav ul li::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 0.2em;
+        background: black;
+        left: 0;
+        bottom: 0;
+        background-image: linear-gradient(to right, #5e42a6, #b74e91);
+    }
+
+    .form-container {
+        position: absolute;
+        top: 50%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.8); /* Slightly transparent white background */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 300px; /* Fixed width for the form */
+    }
+
+    #Logo {
+        display: block;
+        width: 80%; /* Adjust the width of the logo */
+        margin: 0 auto 20px; /* Center the logo and add margin at the bottom */
+        padding: 0 10%;
+    }
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .form-container input, .form-container select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #5e42a6; /* Button background color */
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .form-container button:hover {
+        background: #b74e91; /* Button hover color */
+    }
+
+    .register-link {
+        display: block;
+        text-align: center;
+        margin-top: 15px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .register-link:hover {
+        text-decoration: underline;
+    }
+    textarea {
+            width: 100%;
+            height: 150px; /* Adjust the height as needed */
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            }
+</style>
+</head>
+<body>
+<!-- HTML content -->
+<main class="main">
+ 
+
+  <div class="form-container">
+    <h2>CONTACT US</h2>
+    <form>
+      <label for="Email">Email</label>
+      <input type="text" id="username" name="username_cu" required>
+
+      <label for="text">Message</label>
+      <input type="text" id="password" name="password_cu" required placeholder="Write a suggestion to us ...">
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message_cu" required placeholder="Write a suggestion to us ..." rows="4" cols="50"></textarea>
+      
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</main>
+
+</body>
+</html>
